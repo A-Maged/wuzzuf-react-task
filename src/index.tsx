@@ -30,12 +30,12 @@ function ThemeWrapper({ children }: any) {
 }
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <StateProvider>
-    <ThemeWrapper>
-      <App />
-    </ThemeWrapper>
-  </StateProvider>,
-  // </React.StrictMode>
+  <React.StrictMode>
+    <StateProvider>
+      <ThemeWrapper>
+        <App />
+      </ThemeWrapper>
+    </StateProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
