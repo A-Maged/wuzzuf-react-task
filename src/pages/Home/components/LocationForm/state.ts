@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import {
   FieldsErrorMsgs,
   LocationFormAction,
@@ -67,18 +66,16 @@ export function locationReducer(
   return newState;
 }
 
-export function useHasAreas(fields: TLocationFormState['fields']) {
+export function countryHasAreas(fields: TLocationFormState['fields']) {
   const COUNTRIES_WITH_AREAS = ['egypt'];
 
-  return useMemo(() => {
-    return (
-      fields.country &&
-      fields.city &&
-      COUNTRIES_WITH_AREAS.includes(
-        fields.country?.attributes.name.toLowerCase() || ''
-      )
-    );
-  }, [fields, COUNTRIES_WITH_AREAS]);
+  return (
+    fields.country &&
+    fields.city &&
+    COUNTRIES_WITH_AREAS.includes(
+      fields.country?.attributes.name.toLowerCase() || ''
+    )
+  );
 }
 
 export function calculateErrors(
