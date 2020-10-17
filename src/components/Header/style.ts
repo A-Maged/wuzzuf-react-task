@@ -7,7 +7,11 @@ export const container = css`
   height: 50px;
 
   & > *{
-    margin: auto 20px
+    margin: auto 15px
+  }
+
+  svg {
+    font-size: 19px;
   }
 `;
 
