@@ -6,8 +6,16 @@
 - Dark & Light theme switcher (persisted to local storage)
 - OvermindJS (state management)
 - emotionJS & normalizeCss
-- Font Awesome
 - Ant Design - UI Framework
+- Font Awesome
+
+### Getting Started:
+
+##### Run these commands:
+```bash
+$ yarn install  # install dependencies
+$ yarn start    # run
+```
 
 ### Todo:
 
