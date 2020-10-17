@@ -6,12 +6,12 @@ export const container = css`
   justify-content: center;
   height: 50px;
 
-  & > *{
-    margin: auto 15px
-  }
-
-  svg {
-    font-size: 19px;
+  & > * {
+    margin: auto 15px;
   }
 `;
 
+export const icon = css`
+  display: flex;
+  font-size: 19px;
+`;

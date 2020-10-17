@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useActions, useStore } from '@State';
-import { container } from './style';
+import { container, icon } from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import SunIcon from '@Components/SunIcon';
 
 export default function Header() {
   const actions = useActions();
@@ -16,9 +17,9 @@ export default function Header() {
 
       <Link to="" onClick={actions.app.toggleDarkTheme}>
         {appState.app.isDarkTheme ? (
-          <FontAwesomeIcon icon={faMoon} />
+          <SunIcon css={icon} />
         ) : (
-          <FontAwesomeIcon icon={faSun} />
+          <FontAwesomeIcon icon={faMoon} css={icon} />
         )}
       </Link>
     </nav>
