@@ -8,13 +8,13 @@ import {
   calculateErrors,
   initState,
   locationReducer,
-  useHasAreas,
+  countryHasAreas,
 } from './state';
 
 export default function LocationForm() {
   const [state, dispatch] = useReducer(locationReducer, initState);
   const actions = useActions();
-  const hasAreas = useHasAreas(state.fields);
+  const hasAreas = countryHasAreas(state.fields);
   const errors = calculateErrors(state.touched, state.fields);
 
   useEffect(
