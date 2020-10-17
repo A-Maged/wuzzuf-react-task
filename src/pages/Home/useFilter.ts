@@ -7,12 +7,12 @@ type TUseFilterReturn<T> = {
 };
 
 // TODO: make it compare/handle different types
-/* Filter Object properties with a String */
+/* Manage & Filter a list<object> properties with a String */
 export default function useFilter<T>(
   data: T,
   getComparisonValue: (item: any) => string
 ): TUseFilterReturn<T> {
-  const [filteredData, setFilteredData] = useState<T>(data);
+  const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
     setFilteredData(data);
@@ -24,14 +24,10 @@ export default function useFilter<T>(
       return;
     }
 
-    // replace any with the correct type
+    //TODO: replace any with the correct type
     let filtered: any = {};
 
-    let keys = Object.getOwnPropertyNames(data);
-
-    (keys as Array<keyof T>).forEach((key) => {
-      let item: any = data[key];
-
+    Object.entries(data).forEach(([key, item]) => {
       let foundSimilarCountry = getComparisonValue(item)
         .toLowerCase()
         .indexOf(filterStr.toLowerCase());
