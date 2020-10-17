@@ -4,8 +4,8 @@ import { Select } from 'antd';
 import { useStore } from '@State';
 import { selectStyles } from './style';
 import { IArea, TAllAreas } from '@Entities/Area';
-import OptionsFallback from './OptionsFallback';
-import OptionsEmpy from './OptionsEmpy';
+import OptionsEmpy from '@Components/OptionsEmpy';
+import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
 import { TLocationFormDispatch } from './types';
 
@@ -54,7 +54,7 @@ export default function SelectArea({
       onSearch={filterFn}
       onSelect={resetFilterFn}
       value={selectedArea?.id}
-      notFoundContent={isLoadingAreas ? OptionsFallback : OptionsEmpy}
+      notFoundContent={isLoadingAreas ? <OptionsFallback /> : <OptionsEmpy />}
       {...props}
     >
       {Options}

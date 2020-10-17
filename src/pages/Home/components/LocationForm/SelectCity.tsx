@@ -3,8 +3,8 @@ import React from 'react';
 import { useStore } from '@State';
 import { ICity, TAllCities } from '@Entities/City';
 import { selectStyles } from './style';
-import OptionsFallback from './OptionsFallback';
-import OptionsEmpy from './OptionsEmpy';
+import OptionsEmpy from '@Components/OptionsEmpy';
+import OptionsFallback from '@Components/OptionsFallback';
 import { Select } from 'antd';
 import useFilter from '../../useFilter';
 import { TLocationFormDispatch } from './types';
@@ -65,7 +65,7 @@ export default function SelectCity({
       onSelect={onSelect}
       onBlur={onBlur}
       value={selectedCity?.id}
-      notFoundContent={isLoadingCities ? OptionsFallback : OptionsEmpy}
+      notFoundContent={isLoadingCities ? <OptionsFallback /> : <OptionsEmpy />}
       {...props}
     >
       {Options}

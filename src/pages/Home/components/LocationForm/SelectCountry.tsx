@@ -3,8 +3,8 @@ import { Select } from 'antd';
 
 import { useActions, useStore } from '@State';
 import { ICountry, TAllCountries } from '@Entities/Country';
-import OptionsFallback from './OptionsFallback';
-import OptionsEmpy from './OptionsEmpy';
+import OptionsEmpy from '@Components/OptionsEmpy';
+import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
 import { TLocationFormDispatch } from './types';
 import { selectStyles } from './style';
@@ -67,7 +67,9 @@ export default function SelectCountry({
       onSearch={filterFn}
       onSelect={resetFilterFn}
       onBlur={onBlur}
-      notFoundContent={isLoadingCountries ? OptionsFallback : OptionsEmpy}
+      notFoundContent={
+        isLoadingCountries ? <OptionsFallback /> : <OptionsEmpy />
+      }
       placeholder="Select Country"
       {...props}
     >
