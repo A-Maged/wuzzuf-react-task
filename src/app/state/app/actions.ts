@@ -10,11 +10,12 @@ export const stoptLoading: Action = ({ state }) => {
 };
 
 export const toggleDarkTheme: Action = ({ state }) => {
-  const updatedIsDark = !state.app.isDarkTheme;
-  state.app.isDarkTheme = updatedIsDark;
+  const isDark = !state.app.isDarkTheme;
+  
+  state.app.isDarkTheme = isDark;
 
   window.localStorage.setItem(
     config.themeStorageKey,
-    JSON.stringify(updatedIsDark)
+    JSON.stringify(isDark)
   );
 };
