@@ -12,10 +12,11 @@ export default function Header() {
   const appState = useStore();
 
   return (
-    <nav css={container}>
-      <Link to="/">Home</Link>
+    <nav css={(theme) => container(theme)}>
+      <Link to="/">Welcome</Link>
+      <Link to="/home">Home</Link>
 
-      <Link to="" onClick={actions.app.toggleDarkTheme}>
+      <Link to="#" onClick={actions.app.toggleDarkTheme}>
         {appState.app.isDarkTheme ? (
           <SunIcon css={icon} />
         ) : (

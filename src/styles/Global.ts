@@ -1,6 +1,7 @@
 import { css } from '@emotion/core';
+import { TTheme } from './themes';
 
-export default function globalStyles(theme: any) {
+export default function globalStyles(theme: TTheme) {
   return css`
     html {
       height: 100%;
@@ -9,7 +10,7 @@ export default function globalStyles(theme: any) {
     body {
       height: 100%;
       color: ${theme.colors.text};
-      background: ${theme.colors.background};
+      background: ${theme.colors.backgroundLight};
     }
 
     #root {
