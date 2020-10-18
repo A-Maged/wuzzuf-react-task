@@ -17,6 +17,10 @@ export default function globalStyles(theme: TTheme) {
       height: 100%;
     }
 
+    a {
+      text-decoration: underline;
+    }
+
     a,
     h1,
     h2,
