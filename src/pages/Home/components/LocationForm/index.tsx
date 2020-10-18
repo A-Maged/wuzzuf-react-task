@@ -75,6 +75,10 @@ export default function LocationForm() {
         isLoadingCountries={state.isLoadingCountries}
       />
 
+      {/*
+       * TODO: refactor.
+       * this causes a janky experience to the user and browser to reflow.
+       */}
       {errors.country?.length > 0 && (
         <div style={{ color: 'red' }}>{errors.country}</div>
       )}
