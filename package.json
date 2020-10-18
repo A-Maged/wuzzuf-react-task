@@ -2,7 +2,6 @@
   "name": "wuzzuf-task",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://a-maged.github.io/wuzzuf-react-task/index.html",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
