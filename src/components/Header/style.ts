@@ -9,7 +9,9 @@ export const container = (theme: TTheme) => css`
   box-shadow: ${theme.colors.shadow};
 
   & > * {
+    color: ${theme.colors.text};
     margin: auto 15px;
+    text-decoration: none;
   }
 `;
 

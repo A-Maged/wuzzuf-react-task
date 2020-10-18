@@ -19,9 +19,13 @@ export default function globalStyles(theme: TTheme) {
 
     a {
       text-decoration: underline;
+      color: #40a9ff;
+
+      &:hover {
+        color: inherit;
+      }
     }
 
-    a,
     h1,
     h2,
     h3,

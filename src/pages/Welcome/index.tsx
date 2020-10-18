@@ -9,12 +9,23 @@ export default function Welcome() {
       <p>
         This is the solution for the technical assessment task i recieved from{' '}
         <a href="https://wuzzuf.net" target="_blank" rel="noopener noreferrer">
-          Wuzzuf.
+          Wuzzuf
         </a>
       </p>
 
       <p>
-        Go to the <Link to="/home">next page.</Link>{' '}
+        Enable CORS using this{' '}
+        <a
+          href="https://chrome.google.com/webstore/detail/cross-domain-cors/mjhpgnbimicffchbodmgfnemoghjakai"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          chrome extension
+        </a>
+      </p>
+
+      <p>
+        Then go to the <Link to="/home">next page</Link>
       </p>
     </div>
   );
