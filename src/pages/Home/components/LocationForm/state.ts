@@ -84,10 +84,8 @@ export function calculateErrors(
 ) {
   let errors: any = {};
 
-  let fieldNames = Object.getOwnPropertyNames(fields);
-
-  (fieldNames as Array<keyof TLocationFormState['touched']>).forEach((name) => {
-    let fieldValue = fields[name];
+  Object.entries(fields).forEach((field: Array<TouchedFields>) => {
+    let [name, fieldValue] = field;
 
     // TODO: support more usecases
     // TODO: coercion problem if fieldValue is 0
