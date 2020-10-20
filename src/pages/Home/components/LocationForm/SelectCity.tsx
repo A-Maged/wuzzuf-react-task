@@ -9,6 +9,7 @@ import OptionsFallback from '@Components/OptionsFallback';
 import { Select } from 'antd';
 import useFilter from '../../useFilter';
 import { useLocationFormState } from './state';
+import { FieldsErrorMsgs } from './types';
 
 export default function SelectCity(props: any) {
   const { control, getValues, setValue, watch } = useFormContext();
@@ -68,7 +69,7 @@ export default function SelectCity(props: any) {
         state.isLoadingCities ? <OptionsFallback /> : <OptionsEmpy />
       }
       options={Options}
-      rules={{ required: 'City is required' }}
+      rules={{ required: FieldsErrorMsgs.city }}
       {...props}
     />
   );

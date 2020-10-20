@@ -1,24 +1,23 @@
 import React from 'react';
+import { Button } from 'antd';
 import { useForm, FormProvider } from 'react-hook-form';
 
 import SelectCountry from './SelectCountry';
-import { Button } from 'antd';
 import SelectCity from './SelectCity';
 import SelectArea from './SelectArea';
 import { countryHasAreas } from './state';
+import { Fields } from './types';
 
 export default function LocationForm() {
-  const formMethods = useForm();
-  const errors = formMethods.errors;
+  const formMethods = useForm<Fields>();
 
+  const errors = formMethods.errors;
   const { country, city } = formMethods.watch(['country', 'city']);
   const hasAreas = countryHasAreas(country, city);
 
   const onSubmit = (data: any) => {
     console.log(data);
   };
-
-  console.log('rendered');
 
   return (
     <FormProvider {...formMethods}>

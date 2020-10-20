@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { LocationFormAction, TLocationFormState } from './types';
+import { TLocationFormAction, TLocationFormState } from './types';
 
 export const initState: TLocationFormState = {
   isLoadingCountries: false,
@@ -15,7 +15,7 @@ export function useLocationFormState() {
 
 export function locationReducer(
   state: TLocationFormState,
-  action: LocationFormAction
+  action: TLocationFormAction
 ): TLocationFormState {
   let newState = { ...state };
 

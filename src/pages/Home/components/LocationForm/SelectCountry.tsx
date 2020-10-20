@@ -9,6 +9,7 @@ import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
 import { selectStyles } from './style';
 import { useLocationFormState } from './state';
+import { FieldsErrorMsgs } from './types';
 
 export default function SelectCountry(props: any) {
   const { control, setValue } = useFormContext();
@@ -51,19 +52,19 @@ export default function SelectCountry(props: any) {
       as={Select}
       name="country"
       control={control}
+      defaultValue={null}
+      rules={{ required: FieldsErrorMsgs.country }}
       showSearch
       filterOption={false}
-      onSearch={filterFn}
-      onSelect={onSelect}
       size="large"
       css={selectStyles}
-      defaultValue={null}
       placeholder="Select Country"
+      options={Options}
+      onSearch={filterFn}
+      onSelect={onSelect}
       notFoundContent={
         state.isLoadingCountries ? <OptionsFallback /> : <OptionsEmpy />
       }
-      options={Options}
-      rules={{ required: 'Country is required' }}
       {...props}
     />
   );
