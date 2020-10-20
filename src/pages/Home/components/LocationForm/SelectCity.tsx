@@ -34,8 +34,6 @@ export default function SelectCity(props: any) {
       dispatch({ type: 'loading-cities', value: true });
 
       actions.location.getCities(countryId).finally(() => {
-        console.log(countryId);
-
         dispatch({ type: 'loading-cities', value: false });
       });
     },
