@@ -50,7 +50,7 @@ export default function SelectCountry(props: any) {
   return (
     <Controller
       as={Select}
-      name="country"
+      name={Fields.country}
       control={control}
       defaultValue={null}
       rules={{ required: FieldsErrorMsgs.country }}

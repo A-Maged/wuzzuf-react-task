@@ -54,7 +54,7 @@ export default function SelectCity(props: any) {
     <Controller
       as={Select}
       control={control}
-      name="city"
+      name={Fields.city}
       defaultValue={null}
       showSearch
       filterOption={false}

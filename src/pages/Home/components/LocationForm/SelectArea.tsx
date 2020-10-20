@@ -9,6 +9,7 @@ import OptionsEmpy from '@Components/OptionsEmpy';
 import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
 import { countryHasAreas, useLocationFormState } from './state';
+import { Fields } from './types';
 
 export default function SelectArea(props: any) {
   const { control, getValues } = useFormContext();
@@ -54,7 +55,7 @@ export default function SelectArea(props: any) {
     <Controller
       as={Select}
       control={control}
-      name="area"
+      name={Fields.area}
       defaultValue={null}
       showSearch
       filterOption={false}
