@@ -19,7 +19,7 @@ export default function useFilter<T>(
   }, [data]);
 
   function filterFn(filterStr: string) {
-    if (!filterStr) {
+    if (!filterStr || !data) {
       resetFilterFn();
       return;
     }

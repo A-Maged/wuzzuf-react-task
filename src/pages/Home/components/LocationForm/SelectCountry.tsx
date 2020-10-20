@@ -1,29 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Select } from 'antd';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { useActions, useStore } from '@State';
 import { ICountry, TAllCountries } from '@Entities/Country';
 import OptionsEmpy from '@Components/OptionsEmpy';
 import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
-import { TLocationFormDispatch } from './types';
 import { selectStyles } from './style';
+import { useLocationFormState } from './state';
 
-const { Option } = Select;
+export default function SelectCountry(props: any) {
+  const { control, setValue } = useFormContext();
 
-type TProps = {
-  dispatch: TLocationFormDispatch;
-  isLoadingCountries: boolean;
-  selectedCountry: ICountry | null;
-  [key: string]: any;
-};
+  const { state, dispatch } = useLocationFormState();
 
-export default function SelectCountry({
-  dispatch,
-  isLoadingCountries,
-  selectedCountry,
-  ...props
-}: TProps) {
   const appState = useStore();
   const actions = useActions();
 
@@ -32,48 +23,48 @@ export default function SelectCountry({
     (country: ICountry) => country.attributes.name
   );
 
-  function onCountryChange(countryId: string) {
-    let selectedCountry = appState.location.countries[countryId];
+  useEffect(
+    function loadCountires() {
+      dispatch({ type: 'loading-countries', value: true });
 
-    dispatch({ type: 'reset-city' });
+      actions.location.getCountries().finally(() => {
+        dispatch({ type: 'loading-countries', value: false });
+      });
+    },
+    [actions.location, dispatch]
+  );
 
-    dispatch({ type: 'select-country', country: selectedCountry });
+  function onSelect() {
+    resetFilterFn();
+
+    setValue('city', null);
 
     actions.location.resetCities();
   }
 
-  function onBlur() {
-    dispatch({
-      type: 'touched',
-      field: 'country',
-      value: true,
-    });
-  }
-
-  const Options = Object.values(filteredData).map((country: ICountry) => (
-    <Option key={country.id} value={country.id}>
-      {country.attributes.name}
-    </Option>
-  ));
+  const Options = Object.values(filteredData).map((country: ICountry) => {
+    return { label: country.attributes.name, value: country.id };
+  });
 
   return (
-    <Select
+    <Controller
+      as={Select}
+      name="country"
+      control={control}
       showSearch
       filterOption={false}
+      onSearch={filterFn}
+      onSelect={onSelect}
       size="large"
       css={selectStyles}
-      value={selectedCountry?.id}
-      onChange={onCountryChange}
-      onSearch={filterFn}
-      onSelect={resetFilterFn}
-      onBlur={onBlur}
-      notFoundContent={
-        isLoadingCountries ? <OptionsFallback /> : <OptionsEmpy />
-      }
+      defaultValue={null}
       placeholder="Select Country"
+      notFoundContent={
+        state.isLoadingCountries ? <OptionsFallback /> : <OptionsEmpy />
+      }
+      options={Options}
+      rules={{ required: 'Country is required' }}
       {...props}
-    >
-      {Options}
-    </Select>
+    />
   );
 }

@@ -1,63 +1,73 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Select } from 'antd';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { useStore } from '@State';
+import { useActions, useStore } from '@State';
 import { selectStyles } from './style';
 import { IArea, TAllAreas } from '@Entities/Area';
 import OptionsEmpy from '@Components/OptionsEmpy';
 import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
-import { TLocationFormDispatch } from './types';
+import { countryHasAreas, useLocationFormState } from './state';
 
-const { Option } = Select;
+export default function SelectArea(props: any) {
+  const { control, getValues } = useFormContext();
 
-type TProps = {
-  dispatch: TLocationFormDispatch;
-  selectedArea: IArea | null;
-  isLoadingAreas: boolean;
-  [key: string]: any;
-};
-
-export default function SelectArea({
-  selectedArea,
-  isLoadingAreas,
-  dispatch,
-  ...props
-}: TProps) {
   const appState = useStore();
-
+  const actions = useActions();
+  const { state, dispatch } = useLocationFormState();
   let { filteredData, filterFn, resetFilterFn } = useFilter<TAllAreas>(
     appState.location.areas,
     (area: IArea) => area.attributes.name
   );
 
-  function onAreaChange(areaId: string) {
-    let selectedArea = appState.location.areas[areaId];
+  const { country, city } = getValues(['country', 'city']);
+  const hasAreas = countryHasAreas(country, city);
 
-    dispatch({ type: 'select-area', area: selectedArea });
+  useEffect(
+    function loadAreas() {
+      if (!hasAreas) return;
+
+      dispatch({ type: 'loading-areas', value: true });
+
+      actions.location
+        .getAreas({
+          countryId: country,
+          cityId: city,
+        })
+        .finally(() => {
+          dispatch({ type: 'loading-areas', value: false });
+        });
+    },
+    [country, city, hasAreas, actions.location, dispatch]
+  );
+
+  function onSelect() {
+    resetFilterFn();
   }
 
-  const Options = Object.values(filteredData).map((area: IArea) => (
-    <Option key={area.id} value={area.id}>
-      {area.attributes.name}
-    </Option>
-  ));
+  const Options = Object.values(filteredData).map((area: IArea) => {
+    return { label: area.attributes.name, value: area.id };
+  });
 
   return (
-    <Select
+    <Controller
+      as={Select}
+      control={control}
+      name="area"
+      defaultValue={null}
       showSearch
       filterOption={false}
       size="large"
       css={selectStyles}
       placeholder="Select City"
-      onChange={onAreaChange}
       onSearch={filterFn}
-      onSelect={resetFilterFn}
-      value={selectedArea?.id}
-      notFoundContent={isLoadingAreas ? <OptionsFallback /> : <OptionsEmpy />}
+      onSelect={onSelect}
+      notFoundContent={
+        state.isLoadingAreas ? <OptionsFallback /> : <OptionsEmpy />
+      }
+      options={Options}
       {...props}
-    >
-      {Options}
-    </Select>
+    />
   );
 }

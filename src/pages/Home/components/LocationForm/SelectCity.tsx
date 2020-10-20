@@ -1,74 +1,75 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { useStore } from '@State';
+import { useActions, useStore } from '@State';
 import { ICity, TAllCities } from '@Entities/City';
 import { selectStyles } from './style';
 import OptionsEmpy from '@Components/OptionsEmpy';
 import OptionsFallback from '@Components/OptionsFallback';
 import { Select } from 'antd';
 import useFilter from '../../useFilter';
-import { TLocationFormDispatch } from './types';
+import { useLocationFormState } from './state';
 
-const { Option } = Select;
+export default function SelectCity(props: any) {
+  const { control, getValues, setValue, watch } = useFormContext();
 
-type Props = {
-  dispatch: TLocationFormDispatch;
-  selectedCity: ICity | null;
-  isLoadingCities: boolean;
-  [key: string]: any;
-};
+  const { state, dispatch } = useLocationFormState();
 
-export default function SelectCity({
-  dispatch,
-  selectedCity,
-  isLoadingCities,
-  ...props
-}: Props) {
   const appState = useStore();
-
+  const actions = useActions();
   let { filteredData, filterFn, resetFilterFn } = useFilter<TAllCities>(
     appState.location.cities,
-    (city: ICity) => city.attributes.name
+    (city: ICity) => city?.attributes.name
   );
 
-  function onCityChange(cityId: string) {
-    let selectedCity = appState.location.cities[cityId];
+  let countryId = watch('country');
 
-    dispatch({ type: 'select-city', city: selectedCity });
+  useEffect(
+    function loadCities() {
+      const countryId = getValues('country');
 
-    dispatch({ type: 'reset-area' });
-  }
+      if (!countryId) return;
 
-  function onBlur() {
-    dispatch({ type: 'touched', field: 'city', value: true });
-  }
+      dispatch({ type: 'loading-cities', value: true });
+
+      actions.location.getCities(countryId).finally(() => {
+        console.log(countryId);
+
+        dispatch({ type: 'loading-cities', value: false });
+      });
+    },
+    [countryId, getValues, actions.location, dispatch]
+  );
 
   function onSelect() {
     resetFilterFn();
+
+    setValue('area', null);
   }
 
-  const Options = Object.values(filteredData).map((city: ICity) => (
-    <Option key={city.id} value={city.id}>
-      {city.attributes.name}
-    </Option>
-  ));
+  const Options = Object.values(filteredData).map((city: ICity) => {
+    return { label: city.attributes.name, value: city.id };
+  });
 
   return (
-    <Select
+    <Controller
+      as={Select}
+      control={control}
+      name="city"
+      defaultValue={null}
       showSearch
       filterOption={false}
       size="large"
       css={selectStyles}
       placeholder="Select City"
-      onChange={onCityChange}
       onSearch={filterFn}
       onSelect={onSelect}
-      onBlur={onBlur}
-      value={selectedCity?.id}
-      notFoundContent={isLoadingCities ? <OptionsFallback /> : <OptionsEmpy />}
+      notFoundContent={
+        state.isLoadingCities ? <OptionsFallback /> : <OptionsEmpy />
+      }
+      options={Options}
+      rules={{ required: 'City is required' }}
       {...props}
-    >
-      {Options}
-    </Select>
+    />
   );
 }

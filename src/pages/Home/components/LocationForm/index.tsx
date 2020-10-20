@@ -1,118 +1,57 @@
-import React, { useEffect, useReducer } from 'react';
+import React from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 
-import SelectArea from './SelectArea';
-import SelectCity from './SelectCity';
 import SelectCountry from './SelectCountry';
-import { useActions } from '@State';
-import {
-  calculateErrors,
-  initState,
-  locationReducer,
-  countryHasAreas,
-} from './state';
+import { Button } from 'antd';
+import SelectCity from './SelectCity';
+import SelectArea from './SelectArea';
+import { countryHasAreas } from './state';
 
 export default function LocationForm() {
-  const [state, dispatch] = useReducer(locationReducer, initState);
-  const actions = useActions();
-  const hasAreas = countryHasAreas(state.fields);
-  const errors = calculateErrors(state.touched, state.fields);
+  const formMethods = useForm();
+  const errors = formMethods.errors;
 
-  useEffect(
-    function loadCountires() {
-      dispatch({ type: 'loading-countries', value: true });
+  const { country, city } = formMethods.watch(['country', 'city']);
+  const hasAreas = countryHasAreas(country, city);
 
-      actions.location.getCountries().finally(() => {
-        dispatch({ type: 'loading-countries', value: false });
-      });
-    },
-    [actions.location]
-  );
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
 
-  useEffect(
-    function loadCities() {
-      if (!state.fields.country) return;
-
-      dispatch({ type: 'loading-cities', value: true });
-
-      actions.location.getCities(state.fields.country.id).finally(() => {
-        dispatch({ type: 'loading-cities', value: false });
-      });
-    },
-    [state.fields.country, actions.location]
-  );
-
-  useEffect(
-    function loadAreas() {
-      if (!hasAreas) return;
-
-      dispatch({ type: 'loading-areas', value: true });
-
-      /*
-       * ignoring typescript errors, because we make sure
-       * variables used have a value using hasAreas
-       */
-      actions.location
-        .getAreas({
-          // @ts-ignore
-          countryId: state.fields.country.id,
-          // @ts-ignore
-          cityId: state.fields.city.id,
-        })
-        .finally(() => {
-          dispatch({ type: 'loading-areas', value: false });
-        });
-    },
-    [state.fields.country, state.fields.city, hasAreas, actions.location]
-  );
+  console.log('rendered');
 
   return (
-    <div>
-      <h3>Country</h3>
+    <FormProvider {...formMethods}>
+      <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+        <h3>Country</h3>
 
-      <SelectCountry
-        dispatch={dispatch}
-        selectedCountry={state.fields.country}
-        isLoadingCountries={state.isLoadingCountries}
-      />
+        <SelectCountry />
 
-      {/*
-       * TODO: refactor.
-       * this causes a janky experience to the user and browser to reflow.
-       */}
-      {errors.country?.length > 0 && (
-        <div style={{ color: 'red' }}>{errors.country}</div>
-      )}
+        {errors.country && (
+          <div style={{ color: 'red' }}>{errors.country.message}</div>
+        )}
 
-      <br />
-      <br />
+        <h3>City</h3>
 
-      <h3>City</h3>
+        <SelectCity />
 
-      <SelectCity
-        dispatch={dispatch}
-        selectedCity={state.fields.city}
-        isLoadingCities={state.isLoadingCities}
-        name="country"
-      />
+        {errors.city && (
+          <div style={{ color: 'red' }}>{errors.city.message}</div>
+        )}
 
-      {errors.city?.length > 0 && (
-        <div style={{ color: 'red' }}>{errors.city}</div>
-      )}
+        {hasAreas && (
+          <>
+            <h3>Area</h3>
 
-      <br />
-      <br />
+            <SelectArea />
+          </>
+        )}
 
-      {hasAreas && (
-        <>
-          <h3>Area</h3>
-
-          <SelectArea
-            dispatch={dispatch}
-            selectedArea={state.fields.area}
-            isLoadingAreas={state.isLoadingAreas}
-          />
-        </>
-      )}
-    </div>
+        <br />
+        <Button type="primary" htmlType="submit">
+          submit
+        </Button>
+      </form>
+    </FormProvider>
   );
 }
