@@ -1,6 +1,7 @@
-import darkTheme from './dark';
-import lightTheme from './light';
+import { TTheme as TypeTheme } from './types';
 
-export type TTheme = typeof darkTheme | typeof lightTheme;
+export { darkTheme } from './dark';
 
-export { darkTheme, lightTheme };
+export { lightTheme } from './light';
+
+export type TTheme = TypeTheme;

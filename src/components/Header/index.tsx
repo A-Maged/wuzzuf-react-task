@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { useActions, useStore } from '@State';
 import { container, icon } from './style';
@@ -13,8 +13,13 @@ export default function Header() {
 
   return (
     <nav css={(theme) => container(theme)}>
-      <Link to="/">Welcome</Link>
-      <Link to="/home">Home</Link>
+      <NavLink exact to="/" activeClassName="active">
+        Welcome
+      </NavLink>
+
+      <NavLink to="/home" activeClassName="active">
+        Home
+      </NavLink>
 
       <Link to="#" onClick={actions.app.toggleDarkTheme}>
         {appState.app.isDarkTheme ? (

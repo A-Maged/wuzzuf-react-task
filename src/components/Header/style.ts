@@ -13,6 +13,10 @@ export const container = (theme: TTheme) => css`
     margin: auto 15px;
     text-decoration: none;
   }
+
+  a.active {
+    color: ${theme.colors.activeNav};
+  }
 `;
 
 export const icon = css`
