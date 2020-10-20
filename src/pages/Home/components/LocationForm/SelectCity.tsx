@@ -9,7 +9,7 @@ import OptionsFallback from '@Components/OptionsFallback';
 import { Select } from 'antd';
 import useFilter from '../../useFilter';
 import { useLocationFormState } from './state';
-import { FieldsErrorMsgs } from './types';
+import { FieldsErrorMsgs, Fields } from './types';
 
 export default function SelectCity(props: any) {
   const { control, getValues, setValue, watch } = useFormContext();
@@ -43,7 +43,7 @@ export default function SelectCity(props: any) {
   function onSelect() {
     resetFilterFn();
 
-    setValue('area', null);
+    setValue(Fields.area, null);
   }
 
   const Options = Object.values(filteredData).map((city: ICity) => {

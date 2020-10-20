@@ -1,10 +1,12 @@
 import { Dispatch } from 'react';
 
-export type Fields = {
-  country: string;
-  city: string;
-  area: string;
-};
+export enum Fields {
+  country = 'country',
+  city = 'city',
+  area = 'area',
+}
+
+export type TFields = typeof Fields;
 
 export enum FieldsErrorMsgs {
   country = 'Please select a country',

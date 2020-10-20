@@ -9,7 +9,7 @@ import OptionsFallback from '@Components/OptionsFallback';
 import useFilter from '../../useFilter';
 import { selectStyles } from './style';
 import { useLocationFormState } from './state';
-import { FieldsErrorMsgs } from './types';
+import { FieldsErrorMsgs, Fields } from './types';
 
 export default function SelectCountry(props: any) {
   const { control, setValue } = useFormContext();
@@ -38,7 +38,7 @@ export default function SelectCountry(props: any) {
   function onSelect() {
     resetFilterFn();
 
-    setValue('city', null);
+    setValue(Fields.city, null);
 
     actions.location.resetCities();
   }

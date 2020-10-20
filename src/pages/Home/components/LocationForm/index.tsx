@@ -6,10 +6,10 @@ import SelectCountry from './SelectCountry';
 import SelectCity from './SelectCity';
 import SelectArea from './SelectArea';
 import { countryHasAreas } from './state';
-import { Fields } from './types';
+import { TFields } from './types';
 
 export default function LocationForm() {
-  const formMethods = useForm<Fields>();
+  const formMethods = useForm<TFields>();
 
   const errors = formMethods.errors;
   const { country, city } = formMethods.watch(['country', 'city']);
