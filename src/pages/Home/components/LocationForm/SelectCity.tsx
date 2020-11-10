@@ -12,10 +12,8 @@ import { useLocationFormState } from './state';
 import { FieldsErrorMsgs, Fields } from './types';
 
 export default function SelectCity(props: any) {
-  const { control, getValues, setValue, watch } = useFormContext();
-
+  const { control, setValue, watch } = useFormContext();
   const { state, dispatch } = useLocationFormState();
-
   const appState = useStore();
   const actions = useActions();
   let { filteredData, filterFn, resetFilterFn } = useFilter<TAllCities>(
@@ -27,8 +25,6 @@ export default function SelectCity(props: any) {
 
   useEffect(
     function loadCities() {
-      const countryId = getValues('country');
-
       if (!countryId) return;
 
       dispatch({ type: 'loading-cities', value: true });
@@ -37,7 +33,7 @@ export default function SelectCity(props: any) {
         dispatch({ type: 'loading-cities', value: false });
       });
     },
-    [countryId, getValues, actions.location, dispatch]
+    [countryId, actions.location, dispatch]
   );
 
   function onSelect() {
