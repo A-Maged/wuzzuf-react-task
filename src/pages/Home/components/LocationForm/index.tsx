@@ -24,7 +24,7 @@ export default function LocationForm() {
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
         <h3>Country</h3>
 
-        <SelectCountry />
+        <SelectCountry autoFocus />
 
         {errors.country && (
           <div style={{ color: 'red' }}>{errors.country.message}</div>
