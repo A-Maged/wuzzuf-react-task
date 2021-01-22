@@ -1,6 +1,6 @@
 import { ICity, TAllCities } from '@Entities/City';
 import { ICountry, TAllCountries } from '@Entities/Country';
-import { IArea, TAllAreas } from '@Entities/Area';
+import { TAllAreas } from '@Entities/Area';
 import config from '@Config';
 
 export async function getCountries(): Promise<TAllCountries> {
@@ -109,7 +109,7 @@ export async function getCitiesStatic(
 
   let results: TAllCities = {};
 
-  Object.entries(allCities).map(([_, city]) => {
+  Object.entries(allCities).forEach(([_, city]) => {
     if (city.relationships.country.data.id === countryId) {
       // @ts-ignore
       results[city.id] = city;
@@ -217,7 +217,7 @@ export async function getAreasStatic({
 
   let results: TAllAreas = {};
 
-  Object.entries(allAreas).map(([_, area]) => {
+  Object.entries(allAreas).forEach(([_, area]) => {
     if (area.relationships.city.data.id === cityId) {
       // @ts-ignore
       results[area.id] = area;
