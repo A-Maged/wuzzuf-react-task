@@ -8,3 +8,7 @@ export const selectStyles = css`
     background-color: #f5f5f5 !important;
   }
 `;
+
+export const labelStyles = css`
+  font-size: 20px;
+`;

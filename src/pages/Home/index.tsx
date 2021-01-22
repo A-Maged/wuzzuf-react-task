@@ -5,8 +5,8 @@ import LocationForm from './components/LocationForm';
 
 export default function Home() {
   return (
-    <div css={container}>
+    <main css={container}>
       <LocationForm />
-    </div>
+    </main>
   );
 }

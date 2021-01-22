@@ -7,6 +7,7 @@ import SelectCity from './SelectCity';
 import SelectArea from './SelectArea';
 import { countryHasAreas } from './state';
 import { TFields } from './types';
+import { labelStyles } from './style';
 
 export default function LocationForm() {
   const formMethods = useForm<TFields>();
@@ -22,17 +23,20 @@ export default function LocationForm() {
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={formMethods.handleSubmit(onSubmit)}>
-        <h3>Country</h3>
-
-        <SelectCountry autoFocus />
+        <label>
+          <p css={labelStyles}>Country</p>
+          <SelectCountry autoFocus />
+        </label>
 
         {errors.country && (
           <div style={{ color: 'red' }}>{errors.country.message}</div>
         )}
 
-        <h3>City</h3>
+        <label>
+          <p css={labelStyles}>City</p>
 
-        <SelectCity />
+          <SelectCity />
+        </label>
 
         {errors.city && (
           <div style={{ color: 'red' }}>{errors.city.message}</div>
@@ -40,9 +44,11 @@ export default function LocationForm() {
 
         {hasAreas && (
           <>
-            <h3>Area</h3>
+            <label>
+              <p css={labelStyles}>Area</p>
 
-            <SelectArea />
+              <SelectArea />
+            </label>
           </>
         )}
 
