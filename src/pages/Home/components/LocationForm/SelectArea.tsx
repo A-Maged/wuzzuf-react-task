@@ -32,7 +32,7 @@ export default function SelectArea(props: any) {
       dispatch({ type: 'loading-areas', value: true });
 
       actions.location
-        .getAreas({
+        .getAreasStatic({
           countryId: country,
           cityId: city,
         })

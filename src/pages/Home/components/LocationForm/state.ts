@@ -37,7 +37,7 @@ export function locationReducer(
 }
 
 export function countryHasAreas(countryId: string, cityId: string) {
-  const COUNTRIES_WITH_AREAS = ['56'];
+  const COUNTRIES_WITH_AREAS = ['56', '2'];
 
   return countryId && cityId && COUNTRIES_WITH_AREAS.includes(countryId || '');
 }

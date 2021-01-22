@@ -16,7 +16,7 @@ export default function LocationForm() {
   const hasAreas = countryHasAreas(country, city);
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    alert(JSON.stringify(data));
   };
 
   return (

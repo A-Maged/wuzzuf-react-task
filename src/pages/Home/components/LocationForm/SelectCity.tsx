@@ -29,7 +29,7 @@ export default function SelectCity(props: any) {
 
       dispatch({ type: 'loading-cities', value: true });
 
-      actions.location.getCities(countryId).finally(() => {
+      actions.location.getCitiesStatic(countryId).finally(() => {
         dispatch({ type: 'loading-cities', value: false });
       });
     },

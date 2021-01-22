@@ -8,11 +8,26 @@ export const getCountries: AsyncAction = async ({ state, effects }) => {
   state.location.countries = allCountries;
 };
 
+export const getCountriesStatic: AsyncAction = async ({ state, effects }) => {
+  const allCountries = await effects.location.getCountriesStatic();
+
+  state.location.countries = allCountries;
+};
+
 export const getCities: AsyncAction<ICountry['id']> = async (
   { state, effects },
   countryId: ICountry['id']
 ) => {
   const allCities = await effects.location.getCities(countryId);
+
+  state.location.cities = allCities;
+};
+
+export const getCitiesStatic: AsyncAction<ICountry['id']> = async (
+  { state, effects },
+  countryId: ICountry['id']
+) => {
+  const allCities = await effects.location.getCitiesStatic(countryId);
 
   state.location.cities = allCities;
 };
@@ -26,6 +41,15 @@ export const getAreas: AsyncAction<TGetAreasArgs> = async (
   { countryId, cityId }
 ) => {
   const allAreas = await effects.location.getAreas({ countryId, cityId });
+
+  state.location.areas = allAreas;
+};
+
+export const getAreasStatic: AsyncAction<TGetAreasArgs> = async (
+  { state, effects },
+  { countryId, cityId }
+) => {
+  const allAreas = await effects.location.getAreasStatic({ countryId, cityId });
 
   state.location.areas = allAreas;
 };

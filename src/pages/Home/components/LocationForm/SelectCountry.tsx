@@ -28,7 +28,7 @@ export default function SelectCountry(props: any) {
     function loadCountires() {
       dispatch({ type: 'loading-countries', value: true });
 
-      actions.location.getCountries().finally(() => {
+      actions.location.getCountriesStatic().finally(() => {
         dispatch({ type: 'loading-countries', value: false });
       });
     },
